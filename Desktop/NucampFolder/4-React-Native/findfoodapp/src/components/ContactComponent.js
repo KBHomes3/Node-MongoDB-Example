@@ -20,7 +20,7 @@ class Contact extends Component {
                 email: false
             }
         };
-        
+
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         
@@ -31,11 +31,11 @@ class Contact extends Component {
             firstName: '',
             lastName: '',
             phoneNum: '',
-            email: '',
+            email: ''
         };
 
         if (this.state.touched.firstName) {
-            if(firstName.length < 2) {
+            if (firstName.length < 2) {
                 errors.firstName = 'First Name must be at least 2 characters';
             } else if (firstName.length > 15 ) {
                 errors.firstName = 'First Name must be 15 or less characters';
@@ -50,7 +50,8 @@ class Contact extends Component {
             }
         }
 
-        const reg= /^\d+$/;
+        const reg = /^\d+$/;
+
         if (this.state.touched.phoneNum && !reg.test(phoneNum)) {
             errors.phoneNum = 'The phone number should contain only numbers';
         }
@@ -61,7 +62,7 @@ class Contact extends Component {
         return errors;
     }
 
-    handleBlur = (field) => {
+    handleBlur = (field) => () => {
         this.setState({
             touched: {...this.state.touched, [field]: true}
         });
