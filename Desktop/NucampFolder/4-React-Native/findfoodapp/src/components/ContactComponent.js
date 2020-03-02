@@ -13,11 +13,11 @@ class Contact extends Component {
             agree: false,
             contactType: 'By Phone',
             feedback: '',
-            touched: {
-                firstName: false,
-                lastName: false,
-                phoneNum: false,
-                email: false
+            errors : {
+                firstName: '',
+                lastName: '',
+                phoneNum: '',
+                email: ''
             }
         };
 
@@ -26,7 +26,7 @@ class Contact extends Component {
         
     }
 
-    validate(firstName, lastName, phoneNum, email) {
+    validate = () => {
         const errors = {
             firstName: '',
             lastName: '',
@@ -34,39 +34,34 @@ class Contact extends Component {
             email: ''
         };
 
-        if (this.state.touched.firstName) {
-            if (firstName.length < 2) {
-                errors.firstName = 'First Name must be at least 2 characters';
-            } else if (firstName.length > 15 ) {
-                errors.firstName = 'First Name must be 15 or less characters';
-            }
+        if (this.state.firstName.length < 2) {
+            errors.firstName = 'First Name must be at least 2 characters';
+        } else if (this.state.firstName.length > 15 ) {
+            errors.firstName = 'First Name must be 15 or less characters';
         }
 
-        if (this.state.touched.lastName) {
-            if (lastName.length < 2) {
-                errors.lastName = 'Last Name must be at least 2 characters';
-            } else if (lastName.length > 15 ) {
-                errors.lastName = 'Last Name must be 15 or less characters';
-            }
+
+        if (this.state.lastName.length < 2) {
+            errors.lastName = 'Last Name must be at least 2 characters';
+        } else if (this.state.lastName.length > 15 ) {
+            errors.lastName = 'Last Name must be 15 or less characters';
         }
 
         const reg = /^\d+$/;
 
-        if (this.state.touched.phoneNum && !reg.test(phoneNum)) {
+        if (this.state.phoneNum && !reg.test(this.state.phoneNum)) {
             errors.phoneNum = 'The phone number should contain only numbers';
         }
 
-        if (this.state.touched.email && !email.includes('@')) {
+        if (this.state.email && !this.state.email.includes('@')) {
             errors.email = 'Email should contain an @ ';
         }
-        return errors;
+
+        this.setState({errors: errors});
     }
 
-    handleBlur = (field) => () => {
-        this.setState({
-            touched: {...this.state.touched, [field]: true}
-        });
-    }
+
+
 
     handleInputChange(event) {
         const target = event.target;
@@ -75,8 +70,9 @@ class Contact extends Component {
 
         this.setState({
             [name]: value
-        });
+        }, ()=> this.validate());
     }
+
 
     handleSubmit(event) {
         console.log('Current state is: ' + JSON.stringify(this.state));
@@ -84,9 +80,16 @@ class Contact extends Component {
         event.preventDefault();
     }
 
+
     render(){
 
-        const errors = this.validate(this.state.firstName, this.state.lastName, this.state.phoneNum, this.state.email);
+        const errors = {
+            firstName: this.state.errors.firstName,
+            lastName: this.state.errors.lastName,
+            phoneNum: this.state.errors.phoneNum,
+            email: this.state.errors.email
+        };
+
 
         return (
             <React.Fragment> 
@@ -138,7 +141,6 @@ class Contact extends Component {
                                         placeholder="First Name"
                                         value={this.state.firstName}
                                         invalid={errors.firstName}
-                                        onBlur={this.handleBlur("firstName")}
                                         onChange={this.handleInputChange} />
                                         <FormFeedback>{errors.firstName}</FormFeedback>
                                 </Col>
@@ -150,7 +152,6 @@ class Contact extends Component {
                                         placeholder="Last Name"
                                         value={this.state.lastName}
                                         invalid={errors.lastName}
-                                        onBlur={this.handleBlur("lastName")}
                                         onChange={this.handleInputChange} />
                                         <FormFeedback>{errors.lastName}</FormFeedback>
                                 </Col>                        
@@ -162,7 +163,6 @@ class Contact extends Component {
                                         placeholder="Phone number"
                                         value={this.state.phoneNum}
                                         invalid={errors.phoneNum}
-                                        onBlur={this.handleBlur("phoneNum")}
                                         onChange={this.handleInputChange} />
                                         <FormFeedback>{errors.phoneNum}</FormFeedback>
                                 </Col>
@@ -174,7 +174,6 @@ class Contact extends Component {
                                         placeholder="Email"
                                         value={this.state.email}
                                         invalid={errors.email}
-                                        onBlur={this.handleBlur("email")}
                                         onChange={this.handleInputChange} />
                                         <FormFeedback>{errors.email}</FormFeedback>
                                 </Col>
