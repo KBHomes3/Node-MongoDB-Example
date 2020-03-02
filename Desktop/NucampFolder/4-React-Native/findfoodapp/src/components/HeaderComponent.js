@@ -1,13 +1,14 @@
 import React, { Component }  from 'react';
-import { Nav, Navbar, NavbarBrand, NavItem, Jumbotron,
+import { Nav, Navbar, NavbarBrand, NavItem, NavbarToggler, Jumbotron,
         Button, Modal, ModalHeader, ModalBody, Form, FormGroup,
-        Input, Label } from 'reactstrap';
+        Input, Label, Collapse } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 
 class Header extends Component {
     constructor(props){
         super(props);
         this.state = {
+            isNavOpen: false,
             isModalOpen: false,
             hidden: true
         };
@@ -15,6 +16,13 @@ class Header extends Component {
         this.toggleModal = this.toggleModal.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
         this.toggleShow = this.toggleShow.bind(this);
+        this.toggleNav = this.toggleNav.bind(this);
+    }
+
+    toggleNav() {
+        this.setState({
+            isNavOpen: !this.state.isNavOpen
+        });
     }
 
     toggleModal() {
@@ -44,35 +52,39 @@ class Header extends Component {
                         <div className="row">
                             <div className="col">
                                 <h1>Find Food App</h1>
+                                <h2>Delicious Experience Every Time</h2>
                             </div>
                         </div>
                     </div>
                 </Jumbotron>
                 <Navbar dark sticky="top" expand="md">
                     <div className="container">
-                        <NavbarBrand className="mr-auto" href="/"><img src="/assets/images/foodlogo.png" height="30" width="30" alt="FindFood Logo" /> FindFoodApp</NavbarBrand>
-                        <Nav navbar>
-                            <NavItem>
-                                <NavLink className="nav-link" to="/home">
-                                    <i className="fa fa-home fa-lg" /> Home
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink className="nav-link" to="/directory">
-                                    <i className="fa fa-list fa-lg" /> Directory
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink className="nav-link" to="/aboutus">
-                                    <i className="fa fa-info fa-lg" /> About
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink className="nav-link" to="/contactus">
-                                    <i className="fa fa-address-card fa-lg" /> Contact Us
-                                </NavLink>
-                            </NavItem>
-                        </Nav>
+                        <NavbarBrand className="mr-auto" href="/"><img src="/assets/images/foodlogo2.png" height="50" width="50" alt="FindFood Logo" /></NavbarBrand>
+                        <NavbarToggler onClick={this.toggleNav} />
+                        <Collapse isOpen={this.state.isNavOpen} navbar>
+                            <Nav navbar>
+                                <NavItem>
+                                    <NavLink className="nav-link justify-content-end" to="/home">
+                                        <i className="fa fa-home fa-lg" /> Home
+                                    </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink className="nav-link" to="/directory">
+                                        <i className="fa fa-list fa-lg" /> Directory
+                                    </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink className="nav-link" to="/aboutus">
+                                        <i className="fa fa-info fa-lg" /> About Us
+                                    </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink className="nav-link" to="/contactus">
+                                        <i className="fa fa-address-card fa-lg" /> Contact Us
+                                    </NavLink>
+                                </NavItem>
+                            </Nav>
+                        </Collapse>
                         <span className="navbar-text ml-auto">
                             <Button outline onClick={this.toggleModal}>
                                 <i className="fa fa-sign-in fa-lg" />Login
@@ -80,6 +92,7 @@ class Header extends Component {
                         </span>
                     </div>
                 </Navbar>
+                
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} >
                     <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
                     <ModalBody>

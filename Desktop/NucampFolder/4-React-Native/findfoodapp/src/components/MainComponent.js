@@ -12,31 +12,28 @@ import ItalianFoodList from './ItalianFoodComponent';
 import AmericanFoodList from './AmericanFoodComponent';
 import AsianFoodList from './AsianFoodComponent';
 import About from './AboutUsComponent';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import { FOODTYPES } from '../shared/foodtypes';
-import { QUICKSERVICES } from '../shared/quickservices';
-import { RECEPIES} from '../shared/recepies';
-import { RESTAURANTS } from '../shared/restaurants';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
+const mapStateToProps = state => {
+    return {
+        foodtypes: state.foodtypes,
+        recepies: state.recepies,
+        restaurants: state.restaurants,
+        quickservices: state.quickservices
+    }
+}
 
 class Main extends Component {
-    constructor(props) {
-        super(props);
-        this.state= {
-            foodtypes: FOODTYPES,
-            quickservices: QUICKSERVICES,
-            recepies: RECEPIES,
-            restaurants: RESTAURANTS,
-        };
-    }
+
     render() {
         const HomePage = () => {
             return (
                 <Home 
                 videoId={'zZBchvH0ZH0'} 
-                recepies={this.state.recepies.filter(recepie => recepie.featured)[0]}
-                restaurants={this.state.restaurants.filter(restaurant => restaurant.featured)[0]}
-                quickservices={this.state.quickservices.filter(quickservice => quickservice.featured)[0]} />
+                recepies={this.props.recepies.filter(recepie => recepie.featured)[0]}
+                restaurants={this.props.restaurants.filter(restaurant => restaurant.featured)[0]}
+                quickservices={this.props.quickservices.filter(quickservice => quickservice.featured)[0]} />
             );
         }
 
@@ -45,14 +42,14 @@ class Main extends Component {
                 <Header />
                 <Switch>
                     <Route path='/home' component={HomePage} />
-                    <Route exact path='/directory' render={() => <Directory foodtypes={this.state.foodtypes} />} />
-                    <Route exact path='/restaurants' render={() => <RestaurantList restaurants={this.state.restaurants} /> } />
-                    <Route exact path='/quickservice' render={() => <QuickServiceList quickservices={this.state.quickservices} /> } />
-                    <Route exact path='/recepies' render={() => <RecepiesList recepies={this.state.recepies} /> } />
-                    <Route exact path='/mexicanFood' render={() => <MexicanFoodList allFoodItems={this.state} /> } />
-                    <Route exact path='/italianFood' render={() => <ItalianFoodList allFoodItems={this.state} /> } />
-                    <Route exact path='/americanFood' render={() => <AmericanFoodList allFoodItems={this.state} /> } />
-                    <Route exact path='/asianFood' render={() => <AsianFoodList allFoodItems={this.state} /> } />
+                    <Route exact path='/directory' render={() => <Directory foodtypes={this.props.foodtypes} />} />
+                    <Route exact path='/restaurants' render={() => <RestaurantList restaurants={this.props.restaurants} /> } />
+                    <Route exact path='/quickservice' render={() => <QuickServiceList quickservices={this.props.quickservices} /> } />
+                    <Route exact path='/recepies' render={() => <RecepiesList recepies={this.props.recepies} /> } />
+                    <Route exact path='/mexicanFood' render={() => <MexicanFoodList allFoodItems={this.props} /> } />
+                    <Route exact path='/italianFood' render={() => <ItalianFoodList allFoodItems={this.props} /> } />
+                    <Route exact path='/americanFood' render={() => <AmericanFoodList allFoodItems={this.props} /> } />
+                    <Route exact path='/asianFood' render={() => <AsianFoodList allFoodItems={this.props} /> } />
                     <Route exact path='/aboutus' component={About} />
                     <Route exact path='/contactus' component={Contact} />
                     <Redirect to='/home' />
@@ -63,4 +60,4 @@ class Main extends Component {
     };
 }
 
-export default Main;
+export default withRouter(connect(mapStateToProps)(Main));

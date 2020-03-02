@@ -60,9 +60,6 @@ class Contact extends Component {
         this.setState({errors: errors});
     }
 
-
-
-
     handleInputChange(event) {
         const target = event.target;
         const name = target.name;
