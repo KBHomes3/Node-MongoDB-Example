@@ -3,12 +3,13 @@ import { Card, CardImg, CardTitle, CardText, Button } from 'reactstrap';
 
 function ItalianFoodList(props) {
     const {
-        quickservices,
+        foodTypes,
+        quickServices,
         recepies,
         restaurants,
     } = props.allFoodItems;
 
-    const allServices = quickservices.concat(recepies, restaurants)
+    const allServices = foodTypes.concat(quickServices, recepies, restaurants)
     const italianFoodOnly = allServices.filter(italianFood => italianFood.type === 'Italian') 
 
     const italianFoodDirectory = italianFoodOnly.map(italianFood => {

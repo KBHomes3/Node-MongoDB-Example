@@ -6,14 +6,14 @@ import { Link } from 'react-router-dom';
 
 function Directory(props) {
 
-        const directory = props.foodtypes.map(foodtype => {
+        const directory = props.foodTypes.map(foodType => {
             return (
-                <div key={foodtype.id} className="col-md-5 m-1">
+                <div key={foodType.id} className="col-md-5 m-1">
                     <Card>
-                        <CardImg height={240} width={240} src={foodtype.image} alt={foodtype.name} />
-                        <CardTitle>{foodtype.name}</CardTitle>
-                        <CardText>{foodtype.description}</CardText>
-                        <Link to={foodtype.path}>
+                        <CardImg height={240} width={240} src={foodType.image} alt={foodType.name} />
+                        <CardTitle>{foodType.name}</CardTitle>
+                        <CardText>{foodType.description}</CardText>
+                        <Link to={foodType.path}>
                             <Button color="primary">See More Like This!</Button>
                         </Link>
                     </Card>

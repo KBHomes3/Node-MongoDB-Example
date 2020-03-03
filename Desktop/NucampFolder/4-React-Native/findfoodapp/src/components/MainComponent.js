@@ -17,10 +17,10 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
     return {
-        foodtypes: state.foodtypes,
+        foodTypes: state.foodTypes,
         recepies: state.recepies,
         restaurants: state.restaurants,
-        quickservices: state.quickservices
+        quickServices: state.quickServices
     }
 }
 
@@ -33,7 +33,7 @@ class Main extends Component {
                 videoId={'zZBchvH0ZH0'} 
                 recepies={this.props.recepies.filter(recepie => recepie.featured)[0]}
                 restaurants={this.props.restaurants.filter(restaurant => restaurant.featured)[0]}
-                quickservices={this.props.quickservices.filter(quickservice => quickservice.featured)[0]} />
+                quickservices={this.props.quickServices.filter(quickService => quickService.featured)[0]} />
             );
         }
 
@@ -42,9 +42,9 @@ class Main extends Component {
                 <Header />
                 <Switch>
                     <Route path='/home' component={HomePage} />
-                    <Route exact path='/directory' render={() => <Directory foodtypes={this.props.foodtypes} />} />
+                    <Route exact path='/directory' render={() => <Directory foodTypes={this.props.foodTypes} />} />
                     <Route exact path='/restaurants' render={() => <RestaurantList restaurants={this.props.restaurants} /> } />
-                    <Route exact path='/quickservice' render={() => <QuickServiceList quickservices={this.props.quickservices} /> } />
+                    <Route exact path='/quickservice' render={() => <QuickServiceList quickServices={this.props.quickServices} /> } />
                     <Route exact path='/recepies' render={() => <RecepiesList recepies={this.props.recepies} /> } />
                     <Route exact path='/mexicanFood' render={() => <MexicanFoodList allFoodItems={this.props} /> } />
                     <Route exact path='/italianFood' render={() => <ItalianFoodList allFoodItems={this.props} /> } />

@@ -4,8 +4,8 @@ import { RECEPIES} from '../shared/recepies';
 import { RESTAURANTS } from '../shared/restaurants';
 
 export const InitialState = {
-    foodtypes: FOODTYPES,
-    quickservices: QUICKSERVICES,
+    foodTypes: FOODTYPES,
+    quickServices: QUICKSERVICES,
     recepies: RECEPIES,
     restaurants: RESTAURANTS
 };
