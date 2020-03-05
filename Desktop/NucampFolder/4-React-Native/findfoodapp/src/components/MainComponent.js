@@ -5,6 +5,7 @@ import Home from './HomeComponent';
 import Directory from './DirectoryComponent';
 import Contact from './ContactComponent';
 import RestaurantList from './RestaurantsComponent';
+import RestaurantInfo from './RestaurantInfoComponent';
 import RecepiesList from './RecepiesComponent';
 import QuickServiceList from './QuickServiceComponent';
 import MexicanFoodList from './MexicanFoodComponent';
@@ -12,6 +13,7 @@ import ItalianFoodList from './ItalianFoodComponent';
 import AmericanFoodList from './AmericanFoodComponent';
 import AsianFoodList from './AsianFoodComponent';
 import About from './AboutUsComponent';
+import { addComment } from '../redux/ActionCreators';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -20,9 +22,15 @@ const mapStateToProps = state => {
         foodTypes: state.foodTypes,
         recepies: state.recepies,
         restaurants: state.restaurants,
+        comments: state.comments,
         quickServices: state.quickServices
     }
 }
+
+const mapDispatchToProps = {
+    addComment: (restaurantId, rating, author, text) => (addComment(restaurantId, rating, author, text))
+};
+
 
 class Main extends Component {
 
@@ -37,6 +45,16 @@ class Main extends Component {
             );
         }
 
+        const RestaurantWithId = ({match}) => {
+            return (
+                <RestaurantInfo
+                restaurant={this.props.restaurants.filter(restaurant => restaurant.id === +match.params.restaurantId)[0]} 
+                comments={this.props.comments.filter(comment => comment.restaurantId === +match.params.restaurantId)}
+                addComment={this.props.addComment}
+                />
+            )
+        }
+
         return (
             <div>
                 <Header />
@@ -44,6 +62,7 @@ class Main extends Component {
                     <Route path='/home' component={HomePage} />
                     <Route exact path='/directory' render={() => <Directory foodTypes={this.props.foodTypes} />} />
                     <Route exact path='/restaurants' render={() => <RestaurantList restaurants={this.props.restaurants} /> } />
+                    <Route path='/restaurants/:restaurantId' component={RestaurantWithId} />
                     <Route exact path='/quickservice' render={() => <QuickServiceList quickServices={this.props.quickServices} /> } />
                     <Route exact path='/recepies' render={() => <RecepiesList recepies={this.props.recepies} /> } />
                     <Route exact path='/mexicanFood' render={() => <MexicanFoodList allFoodItems={this.props} /> } />
@@ -60,4 +79,4 @@ class Main extends Component {
     };
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
