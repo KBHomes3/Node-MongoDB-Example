@@ -13,9 +13,9 @@ import ItalianFoodList from './ItalianFoodComponent';
 import AmericanFoodList from './AmericanFoodComponent';
 import AsianFoodList from './AsianFoodComponent';
 import About from './AboutUsComponent';
-import { addComment } from '../redux/ActionCreators';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { addComment, fetchRestaurants } from '../redux/ActionCreators'
 
 const mapStateToProps = state => {
     return {
@@ -28,27 +28,33 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-    addComment: (restaurantId, rating, author, text) => (addComment(restaurantId, rating, author, text))
+    addComment: (restaurantId, rating, author, text) => (addComment(restaurantId, rating, author, text)),
+    fetchRestaurants: () => (fetchRestaurants())
 };
 
 
 class Main extends Component {
 
+    componentDidMount(){
+        this.props.fetchRestaurants();
+    }
+
     render() {
         const HomePage = () => {
             return (
                 <Home 
-                videoId={'zZBchvH0ZH0'} 
-                recepies={this.props.recepies.filter(recepie => recepie.featured)[0]}
-                restaurants={this.props.restaurants.filter(restaurant => restaurant.featured)[0]}
-                quickservices={this.props.quickServices.filter(quickService => quickService.featured)[0]} />
+                recepie={this.props.recepies.filter(recepie => recepie.featured)[0]}
+                restaurant={this.props.restaurants.restaurants.filter(restaurant => restaurant.featured)[0]}
+                quickservice={this.props.quickServices.filter(quickService => quickService.featured)[0]} />
             );
         }
 
         const RestaurantWithId = ({match}) => {
             return (
                 <RestaurantInfo
-                restaurant={this.props.restaurants.filter(restaurant => restaurant.id === +match.params.restaurantId)[0]} 
+                restaurant={this.props.restaurants.restaurants.filter(restaurant => restaurant.id === +match.params.restaurantId)[0]}
+                isLoading={this.props.restaurants.isLoading} 
+                errMess={this.props.restaurants.errMess}
                 comments={this.props.comments.filter(comment => comment.restaurantId === +match.params.restaurantId)}
                 addComment={this.props.addComment}
                 />

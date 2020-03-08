@@ -9,7 +9,7 @@ function About(props) {
                 <div className="col">
                     <Breadcrumb>
                     <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
-                            <BreadcrumbItem><Link to="/directory">Directory</Link></BreadcrumbItem>
+                            <BreadcrumbItem><Link to="/directory">All Foods</Link></BreadcrumbItem>
                             <BreadcrumbItem active>About Us</BreadcrumbItem>
                             <BreadcrumbItem><Link to="/contactus">Contact Us</Link></BreadcrumbItem>
                     </Breadcrumb>

@@ -1,46 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
 //import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //import { faCoffee } from '@fortawesome/free-solid-svg-icons'
-import YouTube from 'react-youtube';
-import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button} from 'reactstrap';
+import { Loading } from './LoadingComponent';
+import RenderVideo from './RenderVideoComponent';
+import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
-
-//https://youtu.be/zZBchvH0ZH0
-
-function RenderFeaturedCard({item}) {
+function RenderFeaturedCard({item, isLoading, errMess}) {
+    if (isLoading) {
+        return (
+             <Loading />
+        );
+    }
+    if (errMess) {
+        return (
+            <h4>{errMess}</h4>
+        );
+    }
     return (
         <Card>
             <CardImg src={item.image} alt={item.name} />
             <CardBody>
-                <CardTitle>{item.name}</CardTitle>
-                <CardText>{item.description}</CardText>
+            <CardTitle>{item.name}</CardTitle>
+            <CardText>{item.description}</CardText>
             </CardBody>
         </Card>
     );
 }
 
-class Home extends Component {
-
-
-    videoOnReady(event) {
-        event.target.playVideo();
-        console.log(event.target);
-        
-    }
-
-    render() {
-        
-        const opts = {
-            height: '390',
-            width: '640',
-            fluid: 'true',
-            playerVars: { // https://developers.google.com/youtube/player_parameters
-              end: 30,
-                autoplay: 1
-            }
-        }
-    
-    const {videoId} = this.props;
+function Home(props) {
     return (
         <React.Fragment>
             <div className="row m-1">
@@ -54,29 +41,26 @@ class Home extends Component {
                 </Card>
             </div>
             <div className="container centered">
-                <YouTube
-                className="row"
-                videoId={videoId}
-                opts={opts}
-                onReady={this.videoOnReady}
-                />
+                <RenderVideo />
             </div>
             <div className="container">
                 <div className="row">
                     <div className="col-md m-1">
-                        <RenderFeaturedCard item={this.props.restaurants} />
+                        <RenderFeaturedCard item={props.recepie} />
                     </div>
                     <div className="col-md m-1">
-                        <RenderFeaturedCard item={this.props.quickservices} />
+                        <RenderFeaturedCard item={props.quickservice} />
                     </div>
                     <div className="col-md m-1">
-                        <RenderFeaturedCard item={this.props.recepies} />
+                        <RenderFeaturedCard item={props.restaurants}
+                        isLoading={props.restaurantsLoading}
+                        errMess={props.restaurantsErrMess} />
                     </div>
                 </div>
             </div>
         </React.Fragment>
     )
 }
-}
+
 
 export default Home;

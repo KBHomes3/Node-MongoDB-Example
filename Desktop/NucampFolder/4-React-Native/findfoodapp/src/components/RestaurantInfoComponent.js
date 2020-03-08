@@ -3,7 +3,7 @@ import { Modal, ModalHeader, ModalBody, Label, Card, CardImg, CardText, CardBody
     Breadcrumb, BreadcrumbItem, Button, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
-// import { Loading } from './LoadingComponent';
+import { Loading } from './LoadingComponent';
 // import { baseUrl } from '../shared/baseUrl';
  import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
@@ -54,26 +54,28 @@ function RenderComments({comments, addComment, restaurantId}) {
 
 
 function RestaurantInfo(props) {
-    // if (props.isLoading) {
-    //     return (
-    //         <div className="container">
-    //             <div className="row">
-    //                 <Loading />
-    //             </div>
-    //         </div>
-    //     );
-    // }
-    // if (props.errMess) {
-    //     return (
-    //         <div className="container">
-    //             <div className="row">
-    //                 <div className="col">
-    //                     <h4>{props.errMess}</h4>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //     );
-    // }
+    if (props.isLoading) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="col">
+                        <Loading />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+    if (props.errMess) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="col">
+                        <h4>{props.errMess}</h4>
+                    </div>
+                </div>
+            </div>
+        );
+    }
     
     if (props.restaurant) {
         return (

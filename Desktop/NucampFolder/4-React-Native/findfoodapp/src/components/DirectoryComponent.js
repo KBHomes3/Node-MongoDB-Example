@@ -27,7 +27,7 @@ function Directory(props) {
                 <div className="col">
                     <Breadcrumb>
                     <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
-                            <BreadcrumbItem active >Directory</BreadcrumbItem>
+                            <BreadcrumbItem active >All Foods</BreadcrumbItem>
                             <BreadcrumbItem><Link to='/aboutus'>About Us</Link></BreadcrumbItem>
                             <BreadcrumbItem><Link to="/contactus">Contact Us</Link></BreadcrumbItem>
                     </Breadcrumb>

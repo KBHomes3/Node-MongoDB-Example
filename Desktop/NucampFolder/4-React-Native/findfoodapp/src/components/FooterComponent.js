@@ -11,7 +11,7 @@ function Footer(props) {
                         <h5>Links</h5>
                         <NavLink to="/home">Home</NavLink><br/>
                         <NavLink to="/aboutus">About</NavLink><br/>
-                        <NavLink to="/directory">Directory</NavLink><br/>
+                        <NavLink to="/directory">All Foods</NavLink><br/>
                         <NavLink to="/contactus">Contact</NavLink>
                     </div>
                     <div className="col-6 col-sm-3 text-center">

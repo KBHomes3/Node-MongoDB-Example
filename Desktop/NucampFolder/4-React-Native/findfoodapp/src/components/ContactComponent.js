@@ -90,7 +90,7 @@ class Contact extends Component {
                         <div className="col">
                             <Breadcrumb>
                                 <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
-                                <BreadcrumbItem><Link to="/directory">Directory</Link></BreadcrumbItem>
+                                <BreadcrumbItem><Link to="/directory">All Foods</Link></BreadcrumbItem>
                                 <BreadcrumbItem><Link to="/aboutus">About Us</Link></BreadcrumbItem>
                                 <BreadcrumbItem active>Contact Us</BreadcrumbItem>
                             </Breadcrumb>
