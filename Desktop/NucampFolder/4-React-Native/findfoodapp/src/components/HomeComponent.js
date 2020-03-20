@@ -5,6 +5,7 @@ import { Loading } from './LoadingComponent';
 import RenderVideo from './RenderVideoComponent';
 import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
+
 function RenderFeaturedCard({item, isLoading, errMess}) {
     if (isLoading) {
         return (
@@ -29,9 +30,8 @@ function RenderFeaturedCard({item, isLoading, errMess}) {
 
 function Home(props) {
     const restaurant = props.restaurants[0] ? props.restaurants[0] : props.restaurants;
-    console.log(restaurant);
-    const data = {props};
-    console.log(data);
+    console.log(props.restaurants);
+
     return (
         <React.Fragment>
             <div className="row m-1">
